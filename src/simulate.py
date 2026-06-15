@@ -396,8 +396,51 @@ def main(n_sims=10000):
     print("\n=== Probability (%) of reaching each stage — top 20 ===")
     print(show.head(20).to_string())
 
+    global fixtures_global, played_global
+    fixtures_global = fixtures
+    played_global   = pd.DataFrame()
     export_dashboard(model, base_states, n_sims, out, pos_counts, thirdq, pts_sum, gd_sum)
 
+
+
+def compute_upcoming_cards(model, base_states, fixtures):
+    """Score grids for unplayed WC fixtures in the next 48 hours."""
+    if fixtures is None or len(fixtures) == 0:
+        return []
+    today  = pd.Timestamp.utcnow().normalize().tz_localize(None)
+    cutoff = today + pd.Timedelta(days=2)
+    cards  = []
+    for m in fixtures.itertuples():
+        if not (today <= m.date <= cutoff):
+            continue
+        h, a = m.home_team, m.away_team
+        if h not in base_states or a not in base_states:
+            continue
+        sh, sa = base_states[h], base_states[a]
+        elo_gap = (sh["elo"] - sa["elo"]) / 100
+        gf5_h = float(np.mean(sh.get("gf5", [1.3])))
+        ga5_h = float(np.mean(sh.get("ga5", [1.3])))
+        gf5_a = float(np.mean(sa.get("gf5", [1.3])))
+        ga5_a = float(np.mean(sa.get("ga5", [1.3])))
+        lh = model.predict_lambda( elo_gap, 1.0 if not m.neutral else 0.0, gf5_h, ga5_a, 2.0)
+        la = model.predict_lambda(-elo_gap, 0.0, gf5_a, ga5_h, 2.0)
+        lh, la = max(lh, 0.01), max(la, 0.01)
+        mat = model.score_matrix(lh, la)
+        sub = mat[:6, :6].copy()
+        if sub.sum() > 0: sub /= sub.sum()
+        from scipy.stats import poisson as _poisson
+        import numpy as _np
+        cards.append({
+            "home":  h, "away": a,
+            "date":  str(m.date.date()),
+            "ph":    round(float(_np.tril(mat, -1).sum()), 3),
+            "pd":    round(float(_np.trace(mat)), 3),
+            "pa":    round(float(_np.triu(mat, 1).sum()), 3),
+            "expH":  round(float(lh), 2),
+            "expA":  round(float(la), 2),
+            "grid":  [[round(float(sub[i,j]),4) for j in range(6)] for i in range(6)],
+        })
+    return cards
 
 def export_dashboard(model, base_states, n, out, pos_counts, thirdq, pts_sum, gd_sum):
     """Write docs/data.js for the HTML dashboard."""
@@ -433,13 +476,23 @@ def export_dashboard(model, base_states, n, out, pos_counts, thirdq, pts_sum, gd
         for t, row in out.iterrows()
     ]
 
+    bracket = predicted_bracket(model, base_states, group_order)
+    upcoming = compute_upcoming_cards(model, base_states, fixtures_global)
+    played_list = [
+        {"home": r.home_team, "away": r.away_team,
+         "score": f"{int(r.home_score)}–{int(r.away_score)}"}
+        for r in played_global.itertuples()
+    ] if played_global is not None and len(played_global) else []
+
     data = {
-        "generated":  pd.Timestamp.now().strftime("%Y-%m-%d"),
-        "nSims":      n,
-        "codes":      ISO2,
-        "groups":     groups_json,
-        "titleOdds":  odds,
-        "bracket":    predicted_bracket(model, base_states, group_order),
+        "generated":     pd.Timestamp.now().strftime("%Y-%m-%d"),
+        "nSims":         n,
+        "codes":         ISO2,
+        "groups":        groups_json,
+        "titleOdds":     odds,
+        "bracket":       bracket,
+        "upcomingCards": upcoming,
+        "played":        played_list,
     }
 
     docs = ROOT / "docs"
