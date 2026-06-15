@@ -208,10 +208,10 @@ const nm = t => SHORT[t] || t;
 const flag = t => {
   const code = (DATA.codes||{})[t];
   if (!code) return '<span style="font-size:14px">🏳</span>';
-  // Handle subdivisions like GB-SCT (Scotland), GB-ENG (England)
   if (code === 'GB-SCT') return '<span style="font-size:15px">🏴󠁧󠁢󠁳󠁣󠁴󠁿</span>';
   if (code === 'GB-ENG') return '<span style="font-size:15px">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span>';
-  return `<img class="flag" src="https://flagcdn.com/w40/${code.toLowerCase()}.png" alt="${t}" loading="lazy" onerror="this.style.display='none'">`;
+  const lower = code.toLowerCase();
+  return `<img class="flag" src="https://flagcdn.com/w40/${lower}.png" alt="${t}" loading="lazy" onerror="this.outerHTML='<span style=\'font-size:13px\'>' + t.slice(0,2) + '</span>'">`;
 };
 const pct = x => Math.round(x * 100) + "%";
 
@@ -291,7 +291,7 @@ document.getElementById("meta").textContent =
 // Hero
 const best = DATA.titleOdds[0];
 document.getElementById("hero").innerHTML = `
-  <img src="https://flagcdn.com/w160/${DATA.codes[best.team]}.png" alt="${best.team}">
+  <img src="https://flagcdn.com/w160/${(DATA.codes[best.team]||'un').toLowerCase()}.png" alt="${best.team}">
   <div class="name">${best.team}</div>
   <div class="odds">most likely champion — wins <b>${(best.champion*100).toFixed(1)}%</b> of simulated
   tournaments and reaches the final in ${pct(best.final)}</div>`;
