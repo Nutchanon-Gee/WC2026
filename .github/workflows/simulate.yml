@@ -44,8 +44,10 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git stash
           git pull --rebase origin main
+          git stash pop || true
           git add docs/data.js results/sim_results.csv
-          git add docs/played.json 2>/dev/null || true
+          git add docs/played.json data/raw/results.csv 2>/dev/null || true
           git diff --cached --quiet || git commit -m "auto: update $(date -u '+%Y-%m-%d %H:%M UTC')"
           git push
