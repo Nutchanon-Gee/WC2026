@@ -125,8 +125,8 @@ def update_results(matches: list[dict]) -> tuple[int, list[dict]]:
     if new_rows:
         new_df  = pd.DataFrame(new_rows)
         updated = pd.concat([existing, new_df], ignore_index=True)
-    updated["date"] = pd.to_datetime(updated["date"]).dt.strftime("%Y-%m-%d")
-    updated = updated.sort_values("date")
+        updated["date"] = updated["date"].astype(str)
+        updated = updated.sort_values("date")
         updated.to_csv(csv_path, index=False)
         print(f"results.csv: added {len(new_rows)} new match(es)")
     else:
