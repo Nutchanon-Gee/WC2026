@@ -60,10 +60,10 @@ def load_raw():
 
 def standardize_names(df: pd.DataFrame, former: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()
-    df["date"] = pd.to_datetime(df["date"])
+    df["date"] = pd.to_datetime(df["date"], format="mixed", dayfirst=False)
     former = former.copy()
-    former["start_date"] = pd.to_datetime(former["start_date"])
-    former["end_date"]   = pd.to_datetime(former["end_date"])
+    former["start_date"] = pd.to_datetime(former["start_date"], format="mixed")
+    former["end_date"]   = pd.to_datetime(former["end_date"], format="mixed")
     for row in former.itertuples():
         in_window = (df.date >= row.start_date) & (df.date <= row.end_date)
         for col in ("home_team", "away_team"):
