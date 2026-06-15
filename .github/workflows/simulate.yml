@@ -2,20 +2,22 @@ name: Update WC2026 Simulation
 
 on:
   schedule:
-    - cron: '0 */3 * * *'   # every 3 hours
-  workflow_dispatch:          # also allows manual trigger from GitHub UI
+    - cron: '0 */3 * * *'
+  workflow_dispatch:
   push:
-    branches: [main]          # also runs on every push
+    branches: [main]
 
 jobs:
   simulate:
     runs-on: ubuntu-latest
     permissions:
-      contents: write         # needed to push docs/data.js back to repo
+      contents: write
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -24,19 +26,26 @@ jobs:
           cache: 'pip'
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: pip install -r requirements.txt requests
 
-      - name: Run pipeline
+      - name: Fetch live WC2026 results
+        env:
+          FOOTBALL_API_KEY: ${{ secrets.FOOTBALL_API_KEY }}
+        run: python src/fetch_results.py
+
+      - name: Run simulation pipeline
         run: |
           python src/preprocess.py
           python src/build_features.py
           python src/train_model.py
           python src/simulate.py 10000
 
-      - name: Commit and push updated data.js
+      - name: Commit and push updated files
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin main
           git add docs/data.js results/sim_results.csv
-          git diff --cached --quiet || git commit -m "auto: update simulation $(date -u '+%Y-%m-%d %H:%M UTC')"
+          git add docs/played.json 2>/dev/null || true
+          git diff --cached --quiet || git commit -m "auto: update $(date -u '+%Y-%m-%d %H:%M UTC')"
           git push
