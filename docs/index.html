@@ -5,68 +5,84 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The 2026 World Cup, simulated</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ink: #1a1813; --paper: #fcfbf7; --rule: #e3dfd3; --muted: #8d8779;
-    --faint: #bdb8aa; --green: #166f3d;
-    --serif: "Instrument Serif", Georgia, serif;
-    --mono: "IBM Plex Mono", Consolas, monospace;
-    --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --ink:    #f0ede6;
+    --paper:  #0a1a0f;
+    --rule:   #1a3a22;
+    --muted:  #6b8f72;
+    --faint:  #3a5c42;
+    --green:  #2dba5a;
+    --orange: #f47820;
+    --blue:   #1a5fd4;
+    --blue2:  #3b82f6;
+    --serif:  "Instrument Serif", Georgia, serif;
+    --mono:   "IBM Plex Mono", Consolas, monospace;
+    --display:"Bebas Neue", "Arial Black", sans-serif;
+    --sans:   ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   }
   * { box-sizing: border-box; margin: 0; }
   body { background: var(--paper); color: var(--ink); font: 15px/1.6 var(--sans); }
   .wrap { max-width: 1140px; margin: 0 auto; padding: 0 24px 80px; }
 
-  header { border-top: 3px solid var(--ink); padding: 26px 0 0; }
+  /* HEADER */
+  header { border-top: 4px solid var(--orange); padding: 26px 0 0; }
   .kicker { font: 500 11px/1 var(--mono); letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
-  header h1 { font: 400 clamp(40px, 6vw, 64px)/1.05 var(--serif); margin: 14px 0 0; letter-spacing: -0.5px; }
+  header h1 { font: 400 clamp(40px,6vw,64px)/1.05 var(--serif); margin: 14px 0 0; letter-spacing: -0.5px; }
   header h1 em { font-style: italic; color: var(--green); }
 
+  /* HERO */
   #hero { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-top: 36px; padding: 30px 0; display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
   #hero img { width: 72px; outline: 1px solid var(--rule); }
-  #hero .name { font: 400 52px/1 var(--serif); }
+  #hero .name { font: 400 52px/1 var(--serif); color: var(--ink); }
   #hero .odds { font: 400 12px/1.7 var(--mono); color: var(--muted); max-width: 300px; margin-left: auto; }
   #hero .odds b { color: var(--green); font-weight: 500; }
 
-  h2 { font: 400 30px/1.2 var(--serif); margin: 76px 0 4px; }
+  h2 { font: 400 30px/1.2 var(--serif); margin: 76px 0 4px; color: var(--ink); }
   .sub { font: 400 12px/1.7 var(--mono); color: var(--muted); margin-bottom: 24px; max-width: 640px; }
 
-  .odds-list { border-top: 1px solid var(--ink); }
+  /* ODDS */
+  .odds-list { border-top: 1px solid var(--orange); }
   .odds-row { display: grid; grid-template-columns: 30px 26px 180px 1fr 64px; align-items: center; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--rule); }
   .odds-row .rk { font: 400 12px var(--mono); color: var(--faint); }
-  .odds-row .t { font-weight: 500; }
+  .odds-row .t { font-weight: 500; color: var(--ink); }
   .bar { height: 5px; background: none; position: relative; }
   .bar::before { content: ""; position: absolute; inset: 2px 0; border-bottom: 1px solid var(--rule); }
-  .bar i { display: block; height: 100%; background: var(--ink); position: relative; }
+  .bar i { display: block; height: 100%; background: var(--muted); position: relative; }
   .odds-row:first-of-type .bar i { background: var(--green); }
-  .odds-row .v { font: 400 13px var(--mono); text-align: right; }
+  .odds-row:nth-of-type(2) .bar i { background: var(--blue2); }
+  .odds-row:nth-of-type(3) .bar i { background: var(--orange); }
+  .odds-row .v { font: 400 13px var(--mono); text-align: right; color: var(--ink); }
 
   .flag { width: 22px; height: 16px; object-fit: cover; outline: 1px solid var(--rule); flex-shrink: 0; }
 
   .legend { font: 400 12px/1.8 var(--mono); color: var(--muted); margin-bottom: 28px; }
   .legend b { color: var(--green); font-weight: 500; }
 
-  .groups { display: grid; grid-template-columns: repeat(auto-fill, minmax(245px, 1fr)); gap: 0 44px; }
-  .gcard { border-top: 2px solid var(--ink); padding: 10px 0 30px; }
+  /* GROUPS */
+  .groups { display: grid; grid-template-columns: repeat(auto-fill, minmax(245px,1fr)); gap: 0 44px; }
+  .gcard { border-top: 2px solid var(--orange); padding: 10px 0 30px; }
   .gcard h3 { font: 500 12px/1 var(--mono); letter-spacing: 2px; text-transform: uppercase; display: flex; justify-content: space-between; color: var(--ink); padding-bottom: 8px; }
   .gcard h3 span { color: var(--faint); letter-spacing: 0; text-transform: none; }
-  .grow { display: grid; grid-template-columns: 14px 22px 1fr 36px 46px; align-items: center; gap: 9px; padding: 7px 0; border-top: 1px solid var(--rule); font-size: 13.5px; }
+  .grow { display: grid; grid-template-columns: 14px 22px 1fr 36px 46px; align-items: center; gap: 9px; padding: 7px 0; border-top: 1px solid var(--rule); font-size: 13.5px; color: var(--muted); }
   .grow .rk { font: 400 11px var(--mono); color: var(--faint); }
   .grow .nm { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .grow .pts { font: 400 12px var(--mono); color: var(--muted); text-align: right; }
-  .grow .adv { font: 500 12px var(--mono); text-align: right; }
-  .grow.q1 .adv, .grow.q2 .adv { color: var(--green); }
+  .grow .adv { font: 500 12px var(--mono); text-align: right; color: var(--faint); }
+  .grow.q1 .nm, .grow.q1 .adv { color: var(--green); }
+  .grow.q2 .nm, .grow.q2 .adv { color: var(--green); opacity: .8; }
+  .grow.q3 .nm { color: var(--ink); }
   .grow.q3 .adv { color: var(--ink); }
-  .grow.out { color: var(--muted); }
-  .grow.out .adv { color: var(--faint); font-weight: 400; }
-  .gnote { font: 400 11px/1.7 var(--mono); color: var(--muted); padding-top: 10px; }
+  .grow.out { color: var(--faint); }
+  .gnote { font: 400 11px/1.7 var(--mono); color: var(--faint); padding-top: 10px; }
 
+  /* BRACKET */
   .bracket-scroll { overflow-x: auto; padding-bottom: 16px; }
   .bracket { display: flex; gap: 18px; min-width: 1460px; align-items: stretch; }
   .round { display: flex; flex-direction: column; justify-content: space-around; gap: 12px; flex: 1; }
   .round-title { text-align: center; font: 500 10px/1 var(--mono); letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
-  .match { border: 1px solid var(--rule); background: #fff; font-size: 12.5px; }
+  .match { border: 1px solid var(--rule); background: #0d2414; font-size: 12.5px; }
   .mrow { display: grid; grid-template-columns: 18px 1fr 38px; align-items: center; gap: 7px; padding: 7px 9px; color: var(--muted); }
   .mrow + .mrow { border-top: 1px solid var(--rule); }
   .mrow img { width: 18px; height: 13px; object-fit: cover; outline: 1px solid var(--rule); }
@@ -74,12 +90,13 @@
   .mrow.w { color: var(--ink); font-weight: 600; }
   .mrow.w .p { color: var(--green); font-weight: 500; }
   .final-col { display: flex; flex-direction: column; justify-content: center; gap: 14px; flex: 1.15; }
-  .final-col .match { border: 2px solid var(--ink); }
-  .final-col .trophy { text-align: center; font: italic 400 19px var(--serif); }
-  .final-col .trophy b { color: var(--green); font-weight: 400; }
+  .final-col .match { border: 2px solid var(--orange); }
+  .final-col .trophy { text-align: center; font: italic 400 19px var(--serif); color: var(--ink); }
+  .final-col .trophy b { color: var(--orange); font-weight: 400; }
 
+  /* TICKER */
   .ticker-wrap { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-top: 20px; display: flex; overflow: hidden; height: 36px; align-items: center; }
-  .ticker-label { font: 500 10px/1 var(--mono); letter-spacing: 2px; text-transform: uppercase; color: var(--paper); background: var(--ink); padding: 0 14px; height: 100%; display: flex; align-items: center; flex-shrink: 0; position: relative; z-index: 2; }
+  .ticker-label { font: 500 10px/1 var(--mono); letter-spacing: 2px; text-transform: uppercase; color: var(--paper); background: var(--orange); padding: 0 14px; height: 100%; display: flex; align-items: center; flex-shrink: 0; z-index: 2; }
   .ticker-track { display: flex; gap: 0; white-space: nowrap; animation: ticker-scroll 55s linear infinite; }
   .ticker-track:hover { animation-play-state: paused; }
   .ticker-item { display: inline-flex; align-items: center; gap: 7px; font: 400 12px/1 var(--mono); padding: 0 28px; border-right: 1px solid var(--rule); color: var(--ink); }
@@ -87,37 +104,52 @@
   .ticker-item .score { font-weight: 500; color: var(--green); padding: 0 2px; }
   @keyframes ticker-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
+  /* MATCH CARDS */
   .ucard-grid { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 12px; margin-top: 4px; }
-  .ucard { border: 1px solid var(--rule); min-width: 296px; flex-shrink: 0; background: #fff; }
+  .ucard { border: 1px solid var(--rule); min-width: 296px; flex-shrink: 0; background: #0d2414; }
   .ucard-head { padding: 10px 12px 8px; border-bottom: 1px solid var(--rule); }
-  .ucard-matchup { display: flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 500; margin-bottom: 3px; }
+  .ucard-matchup { display: flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 500; margin-bottom: 3px; color: var(--ink); }
   .ucard-meta { font: 400 10px var(--mono); color: var(--muted); }
   .ucard-wdl { display: grid; grid-template-columns: 1fr 1fr 1fr; border-bottom: 1px solid var(--rule); }
   .uwdl-col { padding: 8px 4px 6px; text-align: center; }
   .uwdl-col:not(:last-child) { border-right: 1px solid var(--rule); }
-  .uwdl-label { display: block; font: 400 9px/1.6 var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .uwdl-model { display: block; font: 500 15px/1.4 var(--mono); }
+  .uwdl-label { display: block; font: 400 9px/1.6 var(--mono); color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+  .uwdl-model { display: block; font: 500 15px/1.4 var(--mono); color: var(--ink); }
   .uwdl-model.best { color: var(--green); }
-  .uwdl-mkt { display: block; font: 400 10px/1.4 var(--mono); color: var(--faint); }
-  .uwdl-edge { display: block; font: 500 9px/1.4 var(--mono); }
-  .uwdl-edge.pos { color: var(--green); }
-  .uwdl-edge.neg { color: #a33; }
   .hmap-wrap { padding: 10px 12px 12px; }
   .hmap-axis-label { font: 400 9px/2 var(--mono); color: var(--faint); letter-spacing: .5px; }
-  .hmap { display: grid; grid-template-columns: 13px repeat(6, 1fr); gap: 2px; }
+  .hmap { display: grid; grid-template-columns: 13px repeat(6,1fr); gap: 2px; }
   .hax { display: flex; align-items: center; justify-content: center; font: 400 8px var(--mono); color: var(--faint); }
   .hcell { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font: 400 7.5px var(--mono); border-radius: 2px; }
 
+  /* WHAT MOVED */
   .movers-wrap { margin-top: 10px; }
   .movers-results { font: 400 11px/1.8 var(--mono); color: var(--muted); margin-bottom: 10px; }
   .movers-pills { display: flex; flex-wrap: wrap; gap: 8px; }
-  .mpill { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px 5px 8px; border: 1px solid var(--rule); font: 400 11px var(--mono); }
+  .mpill { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px 5px 8px; border: 1px solid var(--rule); font: 400 11px var(--mono); color: var(--ink); }
   .mpill .mdelta { font-weight: 500; }
   .mpill .mdelta.up { color: var(--green); }
-  .mpill .mdelta.dn { color: #a33; }
+  .mpill .mdelta.dn { color: var(--orange); }
 
-  footer { margin-top: 80px; border-top: 3px solid var(--ink); padding-top: 16px; font: 400 12px/1.9 var(--mono); color: var(--muted); }
+  /* BOSTON BADGE */
+  .boston-badge {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--blue); color: #fff;
+    font: 500 11px/1 var(--mono); letter-spacing: 1px; text-transform: uppercase;
+    padding: 6px 14px; margin-top: 10px; border-radius: 2px;
+  }
+  .boston-badge span { color: var(--orange); font-size: 13px; }
+
+  footer { margin-top: 80px; border-top: 3px solid var(--rule); padding-top: 16px; font: 400 12px/1.9 var(--mono); color: var(--muted); }
   footer a { color: var(--green); }
+
+  /* BG dots pattern inspired by the banner */
+  body::before {
+    content: "";
+    position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    background-image: radial-gradient(circle, rgba(26,95,212,0.06) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
 </style>
 </head>
 <body>
@@ -125,6 +157,7 @@
   <header>
     <div class="kicker" id="meta"></div>
     <h1>The 2026 World Cup, <em>simulated.</em></h1>
+    <div class="boston-badge">⚽ <span>Boston</span> Host City · We Are Boston</div>
   </header>
 
   <div class="ticker-wrap" id="ticker-wrap">
@@ -155,7 +188,7 @@
 
   <h2>Group standings, as predicted</h2>
   <p class="sub">teams ordered by expected points · right column: chance of reaching the knockouts</p>
-  <p class="legend"><b>green</b> = top two, advance directly · black = third place, may advance among the 8 best · gray = eliminated</p>
+  <p class="legend"><b>green</b> = top two, advance directly · white = third place, may advance among the 8 best · gray = eliminated</p>
   <div class="groups" id="groups"></div>
 
   <h2>The bracket, if favorites win</h2>
@@ -169,48 +202,48 @@
 <script src="data.js"></script>
 <script>
 const SHORT = {
-  "Bosnia and Herzegovina": "Bosnia", "Czech Republic": "Czechia",
-  "United States": "USA",
+  "Bosnia and Herzegovina": "Bosnia", "Czech Republic": "Czechia", "United States": "USA",
 };
 const nm = t => SHORT[t] || t;
 const flag = t => {
   const code = (DATA.codes||{})[t];
-  if (!code) return '';
-  return `<img class="flag" src="https://flagcdn.com/w40/${code}.png" alt="${t} flag" loading="lazy">`;
+  if (!code) return '<span style="font-size:14px">🏳</span>';
+  // Handle subdivisions like GB-SCT (Scotland), GB-ENG (England)
+  if (code === 'GB-SCT') return '<span style="font-size:15px">🏴󠁧󠁢󠁳󠁣󠁴󠁿</span>';
+  if (code === 'GB-ENG') return '<span style="font-size:15px">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span>';
+  return `<img class="flag" src="https://flagcdn.com/w40/${code.toLowerCase()}.png" alt="${t}" loading="lazy" onerror="this.style.display='none'">`;
 };
 const pct = x => Math.round(x * 100) + "%";
 
-// === Upcoming match cards ===
+// Upcoming cards
 if (DATA.upcomingCards && DATA.upcomingCards.length) {
   document.getElementById("upcoming-section").style.display = "";
-
   function buildHmap(grid) {
-    const flat = grid.flat();
-    const maxP = Math.max(...flat);
+    const flat = grid.flat(), maxP = Math.max(...flat);
     const labels = [0,1,2,3,4,5];
     let h = '<div class="hmap-axis-label">away →</div><div class="hmap">';
-    h += '<div class="hax"></div>' + labels.map(n => `<div class="hax">${n}</div>`).join("");
-    grid.forEach((row, i) => {
+    h += '<div class="hax"></div>' + labels.map(n=>`<div class="hax">${n}</div>`).join("");
+    grid.forEach((row,i) => {
       h += `<div class="hax">${i}</div>`;
       row.forEach(p => {
-        const t = maxP > 0 ? p / maxP : 0;
-        const bg = `rgba(22,111,61,${t.toFixed(2)})`;
-        const col = t > 0.45 ? "#fff" : "var(--faint)";
+        const t = maxP > 0 ? p/maxP : 0;
+        // Boston colors: green for high, blue for mid, dark for low
+        let bg;
+        if (t > 0.6) bg = `rgba(45,186,90,${(0.4+t*0.6).toFixed(2)})`;
+        else if (t > 0.25) bg = `rgba(59,130,246,${(0.3+t*0.7).toFixed(2)})`;
+        else bg = `rgba(26,58,34,${(0.3+t*2).toFixed(2)})`;
+        const col = t > 0.4 ? "#fff" : "var(--faint)";
         h += `<div class="hcell" style="background:${bg};color:${col}" title="${(p*100).toFixed(1)}%">${(p*100).toFixed(1)}</div>`;
       });
     });
     return h + "</div>";
   }
-
   document.getElementById("upcoming-cards").innerHTML = DATA.upcomingCards.map(card => {
     const best = Math.max(card.ph, card.pd, card.pa);
-    function wdlCol(label, modelP) {
-      const isBest = modelP === best;
-      return `<div class="uwdl-col">
-        <span class="uwdl-label">${label}</span>
-        <span class="uwdl-model${isBest ? " best" : ""}">${Math.round(modelP*100)}%</span>
-      </div>`;
-    }
+    const wdlCol = (label, modelP) => `<div class="uwdl-col">
+      <span class="uwdl-label">${label}</span>
+      <span class="uwdl-model${modelP===best?" best":""}">${Math.round(modelP*100)}%</span>
+    </div>`;
     return `<div class="ucard">
       <div class="ucard-head">
         <div class="ucard-matchup">${flag(card.home)}<span>${nm(card.home)}</span>
@@ -219,134 +252,113 @@ if (DATA.upcomingCards && DATA.upcomingCards.length) {
         <div class="ucard-meta">${card.date} &nbsp;·&nbsp; xG&nbsp;${card.expH}&ndash;${card.expA}</div>
       </div>
       <div class="ucard-wdl">
-        ${wdlCol(nm(card.home), card.ph)}
-        ${wdlCol("Draw", card.pd)}
-        ${wdlCol(nm(card.away), card.pa)}
+        ${wdlCol(nm(card.home),card.ph)}${wdlCol("Draw",card.pd)}${wdlCol(nm(card.away),card.pa)}
       </div>
       <div class="hmap-wrap">${buildHmap(card.grid)}</div>
     </div>`;
   }).join("");
 }
 
-// === What moved ===
+// What moved
 if (DATA.movers && DATA.movers.length) {
   document.getElementById("movers-section").style.display = "";
   if (DATA.moversResults && DATA.moversResults.length) {
     document.getElementById("movers-results").textContent =
-      "Locked in: " + DATA.moversResults.map(r =>
-        `${nm(r.home)} ${r.score} ${nm(r.away)}`
-      ).join(" · ");
+      "Locked in: " + DATA.moversResults.map(r=>`${nm(r.home)} ${r.score} ${nm(r.away)}`).join(" · ");
   }
   document.getElementById("movers-pills").innerHTML = DATA.movers.map(m => {
-    const sign = m.delta > 0 ? "+" : "";
-    const cls = m.delta > 0 ? "up" : "dn";
+    const sign = m.delta>0?"+":"", cls = m.delta>0?"up":"dn";
     return `<div class="mpill">${flag(m.team)}<span>${nm(m.team)}</span>
       <span class="mdelta ${cls}">${sign}${(m.delta*100).toFixed(1)}%</span></div>`;
   }).join("");
 }
 
-// === Results ticker ===
+// Ticker
 function buildTicker(results) {
-  if (!results || !results.length) { document.getElementById("ticker-wrap").style.display = "none"; return; }
-  const items = results.map(m =>
-    `<div class="ticker-item">
-      ${flag(m.home)}<span>${nm(m.home)}</span>
-      <span class="score">${m.score}</span>
-      <span>${nm(m.away)}</span>${flag(m.away)}
-    </div>`
-  ).join("");
-  document.getElementById("ticker").innerHTML = items + items;
+  if (!results||!results.length){document.getElementById("ticker-wrap").style.display="none";return;}
+  const items = results.map(m=>`<div class="ticker-item">
+    ${flag(m.home)}<span>${nm(m.home)}</span>
+    <span class="score">${m.score}</span>
+    <span>${nm(m.away)}</span>${flag(m.away)}</div>`).join("");
+  document.getElementById("ticker").innerHTML = items+items;
 }
-const played = DATA.played || [];
-buildTicker(played);
+buildTicker(DATA.played||[]);
 
-// === Meta ===
+// Meta
 document.getElementById("meta").textContent =
   `${(DATA.nSims||0).toLocaleString()} monte carlo simulations · elo + dixon-coles poisson · updated ${DATA.generated}`;
 
-// === Hero ===
+// Hero
 const best = DATA.titleOdds[0];
 document.getElementById("hero").innerHTML = `
-  <img src="https://flagcdn.com/w160/${DATA.codes[best.team]}.png" alt="${best.team} flag">
+  <img src="https://flagcdn.com/w160/${DATA.codes[best.team]}.png" alt="${best.team}">
   <div class="name">${best.team}</div>
-  <div class="odds">most likely champion — wins <b>${(best.champion * 100).toFixed(1)}%</b> of simulated
+  <div class="odds">most likely champion — wins <b>${(best.champion*100).toFixed(1)}%</b> of simulated
   tournaments and reaches the final in ${pct(best.final)}</div>`;
 
-// === Title odds ===
-document.getElementById("odds").innerHTML = DATA.titleOdds.slice(0, 12).map((o, i) => `
+// Odds — top 12
+const BAR_COLORS = ['var(--green)','var(--blue2)','var(--orange)','var(--green)','var(--blue2)','var(--orange)','var(--green)','var(--blue2)','var(--orange)','var(--green)','var(--blue2)','var(--orange)'];
+document.getElementById("odds").innerHTML = DATA.titleOdds.slice(0,12).map((o,i)=>`
   <div class="odds-row">
-    <span class="rk">${String(i + 1).padStart(2, "0")}</span>${flag(o.team)}
+    <span class="rk">${String(i+1).padStart(2,"0")}</span>${flag(o.team)}
     <span class="t">${nm(o.team)}</span>
-    <span class="bar"><i style="width:${Math.max(1.5, o.champion / DATA.titleOdds[0].champion * 100)}%"></i></span>
-    <span class="v">${(o.champion * 100).toFixed(1)}%</span>
+    <span class="bar"><i style="width:${Math.max(1.5,o.champion/DATA.titleOdds[0].champion*100)}%;background:${BAR_COLORS[i]}"></i></span>
+    <span class="v">${(o.champion*100).toFixed(1)}%</span>
   </div>`).join("");
 
-// === Groups ===
+// Groups
+const played = DATA.played||[];
 document.getElementById("groups").innerHTML = Object.keys(DATA.groups).sort().map(g => {
-  const rows = DATA.groups[g].map((r, i) => `
-    <div class="grow ${i < 2 ? "q" + (i + 1) : i === 2 ? "q3" : "out"}">
-      <span class="rk">${i + 1}</span>${flag(r.team)}
+  const rows = DATA.groups[g].map((r,i)=>`
+    <div class="grow ${i<2?"q"+(i+1):i===2?"q3":"out"}">
+      <span class="rk">${i+1}</span>${flag(r.team)}
       <span class="nm">${nm(r.team)}</span>
       <span class="pts">${r.expPts.toFixed(1)}</span>
       <span class="adv">${pct(r.advance)}</span>
     </div>`).join("");
-  const playedHere = played.filter(m =>
-    DATA.groups[g].some(r => r.team === m.home || r.team === m.away));
-  const note = playedHere.length
-    ? `<div class="gnote">played: ${playedHere.map(m => `${nm(m.home)} ${m.score} ${nm(m.away)}`).join(" · ")}</div>` : "";
+  const here = played.filter(m=>DATA.groups[g].some(r=>r.team===m.home||r.team===m.away));
+  const note = here.length ? `<div class="gnote">played: ${here.map(m=>`${nm(m.home)} ${m.score} ${nm(m.away)}`).join(" · ")}</div>` : "";
   return `<div class="gcard"><h3>Group ${g} <span>pts · adv</span></h3>${rows}${note}</div>`;
 }).join("");
 
-// === Bracket ===
-// Normalise bracket entries — support both {a,b,pA} and {home,away,winner} formats
+// Bracket
 const br = DATA.bracket;
 const byNo = {};
 ["r32","r16","qf","sf","final"].forEach(r => {
   const arr = Array.isArray(br[r]) ? br[r] : [br[r]];
   arr.forEach(m => {
-    // normalise to {match, a, b, pA, winner}
-    if (m.a === undefined) {
-      m.a = m.home || "TBD";
-      m.b = m.away || "TBD";
-      m.pA = m.winner === m.home ? 0.6 : 0.4;
-    }
-    byNo[m.match] = m;
+    if (m.a===undefined){ m.a=m.home||"TBD"; m.b=m.away||"TBD"; m.pA=m.winner===m.home?0.6:0.4; }
+    byNo[m.match]=m;
   });
 });
-
 const matchCard = no => {
   const m = byNo[no];
   if (!m) return `<div class="match"><div class="mrow">TBD</div><div class="mrow">TBD</div></div>`;
-  const pa = Math.round((m.pA||0.5) * 100);
-  const labels = [pa + "%", (100 - pa) + "%"];
-  const row = (t, p) => `
-    <div class="mrow ${m.winner === t ? "w" : ""}">
-      ${flag(t)}<span>${nm(t)}</span><span class="p">${p}</span>
-    </div>`;
-  return `<div class="match">${row(m.a, labels[0])}${row(m.b, labels[1])}</div>`;
+  const pa = Math.round((m.pA||0.5)*100);
+  const row = (t,p) => `<div class="mrow ${m.winner===t?"w":"}">${flag(t)}<span>${nm(t)}</span><span class="p">${p}%</span></div>`;
+  return `<div class="match">${row(m.a,pa)}${row(m.b,100-pa)}</div>`;
 };
-const col = (title, nos) =>
+const col = (title,nos) =>
   `<div class="round"><div><div class="round-title">${title}</div></div>${nos.map(matchCard).join("")}<div></div></div>`;
-
-const champ = br.champion || "TBD";
+const champ = br.champion||"TBD";
 document.getElementById("bracket").innerHTML = [
-  col("Round of 32",  [74,77,73,75,83,84,81,82]),
-  col("Round of 16",  [89,90,93,94]),
+  col("Round of 32",[74,77,73,75,83,84,81,82]),
+  col("Round of 16",[89,90,93,94]),
   col("Quarterfinals",[97,98]),
-  col("Semifinal",    [101]),
+  col("Semifinal",[101]),
   `<div class="final-col"><div class="round-title">Final · July 19 · MetLife Stadium</div>${matchCard(104)||matchCard(103)}
    <div class="trophy">and the cup goes to <b>${champ}</b></div></div>`,
-  col("Semifinal",    [102]),
+  col("Semifinal",[102]),
   col("Quarterfinals",[99,100]),
-  col("Round of 16",  [91,92,95,96]),
-  col("Round of 32",  [76,78,79,80,86,88,85,87]),
+  col("Round of 16",[91,92,95,96]),
+  col("Round of 32",[76,78,79,80,86,88,85,87]),
 ].join("");
 
 document.getElementById("foot").innerHTML =
   `built from <a href="https://www.kaggle.com/datasets/martj42/international-football-results-from-1872-to-2017">international results since 1872</a> ·
    eloratings.net-style elo feeds a double-poisson goal model with a dixon-coles correction ·
-   ${(DATA.nSims||0).toLocaleString()} tournament simulations, elo and form updated after every simulated match ·
-   knockout draws resolved by elo-weighted extra time and penalties`;
+   ${(DATA.nSims||0).toLocaleString()} tournament simulations · knockout draws resolved by elo-weighted penalties ·
+   <span style="color:var(--orange)">⚽ Boston 2026</span>`;
 </script>
 </body>
 </html>
