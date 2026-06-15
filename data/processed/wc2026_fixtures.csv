@@ -1,0 +1,73 @@
+date,home_team,away_team,tournament,neutral,group
+2026-06-11,Mexico,South Korea,FIFA World Cup,False,A
+2026-06-12,Mexico,Czech Republic,FIFA World Cup,False,A
+2026-06-13,Mexico,South Africa,FIFA World Cup,False,A
+2026-06-14,South Korea,Czech Republic,FIFA World Cup,False,A
+2026-06-15,South Korea,South Africa,FIFA World Cup,False,A
+2026-06-16,Czech Republic,South Africa,FIFA World Cup,False,A
+2026-06-17,Canada,Bosnia and Herzegovina,FIFA World Cup,False,B
+2026-06-18,Canada,Qatar,FIFA World Cup,False,B
+2026-06-19,Canada,Switzerland,FIFA World Cup,False,B
+2026-06-20,Bosnia and Herzegovina,Qatar,FIFA World Cup,False,B
+2026-06-21,Bosnia and Herzegovina,Switzerland,FIFA World Cup,False,B
+2026-06-22,Qatar,Switzerland,FIFA World Cup,False,B
+2026-06-23,Brazil,Morocco,FIFA World Cup,False,C
+2026-06-24,Brazil,Haiti,FIFA World Cup,False,C
+2026-06-25,Brazil,Scotland,FIFA World Cup,False,C
+2026-06-26,Morocco,Haiti,FIFA World Cup,False,C
+2026-06-27,Morocco,Scotland,FIFA World Cup,False,C
+2026-06-28,Haiti,Scotland,FIFA World Cup,False,C
+2026-06-11,United States,Paraguay,FIFA World Cup,False,D
+2026-06-12,United States,Australia,FIFA World Cup,False,D
+2026-06-13,United States,Turkey,FIFA World Cup,False,D
+2026-06-14,Paraguay,Australia,FIFA World Cup,False,D
+2026-06-15,Paraguay,Turkey,FIFA World Cup,False,D
+2026-06-16,Australia,Turkey,FIFA World Cup,False,D
+2026-06-17,Germany,Curaçao,FIFA World Cup,False,E
+2026-06-18,Germany,Ivory Coast,FIFA World Cup,False,E
+2026-06-19,Germany,Ecuador,FIFA World Cup,False,E
+2026-06-20,Curaçao,Ivory Coast,FIFA World Cup,False,E
+2026-06-21,Curaçao,Ecuador,FIFA World Cup,False,E
+2026-06-22,Ivory Coast,Ecuador,FIFA World Cup,False,E
+2026-06-23,Netherlands,Japan,FIFA World Cup,False,F
+2026-06-24,Netherlands,Sweden,FIFA World Cup,False,F
+2026-06-25,Netherlands,Tunisia,FIFA World Cup,False,F
+2026-06-26,Japan,Sweden,FIFA World Cup,False,F
+2026-06-27,Japan,Tunisia,FIFA World Cup,False,F
+2026-06-28,Sweden,Tunisia,FIFA World Cup,False,F
+2026-06-11,Belgium,Egypt,FIFA World Cup,False,G
+2026-06-12,Belgium,Iran,FIFA World Cup,False,G
+2026-06-13,Belgium,New Zealand,FIFA World Cup,False,G
+2026-06-14,Egypt,Iran,FIFA World Cup,False,G
+2026-06-15,Egypt,New Zealand,FIFA World Cup,False,G
+2026-06-16,Iran,New Zealand,FIFA World Cup,False,G
+2026-06-17,Spain,Cape Verde,FIFA World Cup,False,H
+2026-06-18,Spain,Saudi Arabia,FIFA World Cup,False,H
+2026-06-19,Spain,Uruguay,FIFA World Cup,False,H
+2026-06-20,Cape Verde,Saudi Arabia,FIFA World Cup,False,H
+2026-06-21,Cape Verde,Uruguay,FIFA World Cup,False,H
+2026-06-22,Saudi Arabia,Uruguay,FIFA World Cup,False,H
+2026-06-23,France,Senegal,FIFA World Cup,False,I
+2026-06-24,France,Iraq,FIFA World Cup,False,I
+2026-06-25,France,Norway,FIFA World Cup,False,I
+2026-06-26,Senegal,Iraq,FIFA World Cup,False,I
+2026-06-27,Senegal,Norway,FIFA World Cup,False,I
+2026-06-28,Iraq,Norway,FIFA World Cup,False,I
+2026-06-11,Argentina,Algeria,FIFA World Cup,False,J
+2026-06-12,Argentina,Austria,FIFA World Cup,False,J
+2026-06-13,Argentina,Jordan,FIFA World Cup,False,J
+2026-06-14,Algeria,Austria,FIFA World Cup,False,J
+2026-06-15,Algeria,Jordan,FIFA World Cup,False,J
+2026-06-16,Austria,Jordan,FIFA World Cup,False,J
+2026-06-17,Portugal,DR Congo,FIFA World Cup,False,K
+2026-06-18,Portugal,Uzbekistan,FIFA World Cup,False,K
+2026-06-19,Portugal,Colombia,FIFA World Cup,False,K
+2026-06-20,DR Congo,Uzbekistan,FIFA World Cup,False,K
+2026-06-21,DR Congo,Colombia,FIFA World Cup,False,K
+2026-06-22,Uzbekistan,Colombia,FIFA World Cup,False,K
+2026-06-23,England,Croatia,FIFA World Cup,False,L
+2026-06-24,England,Ghana,FIFA World Cup,False,L
+2026-06-25,England,Panama,FIFA World Cup,False,L
+2026-06-26,Croatia,Ghana,FIFA World Cup,False,L
+2026-06-27,Croatia,Panama,FIFA World Cup,False,L
+2026-06-28,Ghana,Panama,FIFA World Cup,False,L
