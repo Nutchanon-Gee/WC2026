@@ -335,7 +335,7 @@ const matchCard = no => {
   const m = byNo[no];
   if (!m) return `<div class="match"><div class="mrow">TBD</div><div class="mrow">TBD</div></div>`;
   const pa = Math.round((m.pA||0.5)*100);
-  const row = (t,p) => `<div class="mrow ${m.winner===t?"w":"}">${flag(t)}<span>${nm(t)}</span><span class="p">${p}%</span></div>`;
+  const row = (t,p) => `<div class="mrow ${m.winner===t?"w":""}">${flag(t)}<span>${nm(t)}</span><span class="p">${p}%</span></div>`;
   return `<div class="match">${row(m.a,pa)}${row(m.b,100-pa)}</div>`;
 };
 const col = (title,nos) =>
